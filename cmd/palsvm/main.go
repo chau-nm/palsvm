@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"github.com/chau-nm/palsvm/cmd"
+)
 
 func main() {
-	fmt.Println("palsvm")
+	cmd.Execute()
 }
