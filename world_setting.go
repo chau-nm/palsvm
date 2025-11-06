@@ -2,6 +2,7 @@ package palsvm
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -129,7 +130,7 @@ func (ws *WorldSetting) buildOptionString() string {
 	builder.WriteString(fmt.Sprintf("Difficulty=%s,", ws.Difficulty))
 	builder.WriteString(fmt.Sprintf("RandomizerType=%s,", ws.RandomizerType))
 	builder.WriteString(fmt.Sprintf("RandomizerSeed=\"%s\",", ws.RandomizerSeed))
-	builder.WriteString(fmt.Sprintf("bIsRandomizerPalLevelRandom=%s,", FormatBool(ws.BIsRandomizerPalLevelRandom)))
+	builder.WriteString(fmt.Sprintf("bIsRandomizerPalLevelRandom=%s,", formatBool(ws.BIsRandomizerPalLevelRandom)))
 	builder.WriteString(fmt.Sprintf("DayTimeSpeedRate=%f,", ws.DayTimeSpeedRate))
 	builder.WriteString(fmt.Sprintf("NightTimeSpeedRate=%f,", ws.NightTimeSpeedRate))
 	builder.WriteString(fmt.Sprintf("ExpRate=%f,", ws.ExpRate))
@@ -155,42 +156,42 @@ func (ws *WorldSetting) buildOptionString() string {
 	builder.WriteString(fmt.Sprintf("CollectionObjectRespawnSpeedRate=%f,", ws.CollectionObjectRespawnSpeedRate))
 	builder.WriteString(fmt.Sprintf("EnemyDropItemRate=%f,", ws.EnemyDropItemRate))
 	builder.WriteString(fmt.Sprintf("DeathPenalty=%s,", ws.DeathPenalty))
-	builder.WriteString(fmt.Sprintf("bEnablePlayerToPlayerDamage=%s,", FormatBool(ws.BEnablePlayerToPlayerDamage)))
-	builder.WriteString(fmt.Sprintf("bEnableFriendlyFire=%s,", FormatBool(ws.BEnableFriendlyFire)))
-	builder.WriteString(fmt.Sprintf("bEnableInvaderEnemy=%s,", FormatBool(ws.BEnableInvaderEnemy)))
-	builder.WriteString(fmt.Sprintf("EnablePredatorBossPal=%s,", FormatBool(ws.EnablePredatorBossPal)))
-	builder.WriteString(fmt.Sprintf("bActiveUNKO=%s,", FormatBool(ws.BActiveUNKO)))
-	builder.WriteString(fmt.Sprintf("bEnableAimAssistPad=%s,", FormatBool(ws.BEnableAimAssistPad)))
-	builder.WriteString(fmt.Sprintf("bEnableAimAssistKeyboard=%s,", FormatBool(ws.BEnableAimAssistKeyboard)))
+	builder.WriteString(fmt.Sprintf("bEnablePlayerToPlayerDamage=%s,", formatBool(ws.BEnablePlayerToPlayerDamage)))
+	builder.WriteString(fmt.Sprintf("bEnableFriendlyFire=%s,", formatBool(ws.BEnableFriendlyFire)))
+	builder.WriteString(fmt.Sprintf("bEnableInvaderEnemy=%s,", formatBool(ws.BEnableInvaderEnemy)))
+	builder.WriteString(fmt.Sprintf("EnablePredatorBossPal=%s,", formatBool(ws.EnablePredatorBossPal)))
+	builder.WriteString(fmt.Sprintf("bActiveUNKO=%s,", formatBool(ws.BActiveUNKO)))
+	builder.WriteString(fmt.Sprintf("bEnableAimAssistPad=%s,", formatBool(ws.BEnableAimAssistPad)))
+	builder.WriteString(fmt.Sprintf("bEnableAimAssistKeyboard=%s,", formatBool(ws.BEnableAimAssistKeyboard)))
 	builder.WriteString(fmt.Sprintf("DropItemMaxNum=%d,", ws.DropItemMaxNum))
 	builder.WriteString(fmt.Sprintf("DropItemMaxNum_UNKO=%d,", ws.DropItemMaxNumUNKO))
 	builder.WriteString(fmt.Sprintf("BaseCampMaxNum=%d,", ws.BaseCampMaxNum))
 	builder.WriteString(fmt.Sprintf("BaseCampMaxNumInGuild=%d,", ws.BaseCampMaxNumInGuild))
 	builder.WriteString(fmt.Sprintf("BaseCampWorkerMaxNum=%d,", ws.BaseCampWorkerMaxNum))
 	builder.WriteString(fmt.Sprintf("DropItemAliveMaxHours=%f,", ws.DropItemAliveMaxHours))
-	builder.WriteString(fmt.Sprintf("bAutoResetGuildNoOnlinePlayers=%s,", FormatBool(ws.BAutoResetGuildNoOnlinePlayers)))
+	builder.WriteString(fmt.Sprintf("bAutoResetGuildNoOnlinePlayers=%s,", formatBool(ws.BAutoResetGuildNoOnlinePlayers)))
 	builder.WriteString(fmt.Sprintf("AutoResetGuildTimeNoOnlinePlayers=%f,", ws.AutoResetGuildTimeNoOnlinePlayers))
 	builder.WriteString(fmt.Sprintf("GuildPlayerMaxNum=%d,", ws.GuildPlayerMaxNum))
 	builder.WriteString(fmt.Sprintf("PalEggDefaultHatchingTime=%f,", ws.PalEggDefaultHatchingTime))
 	builder.WriteString(fmt.Sprintf("WorkSpeedRate=%f,", ws.WorkSpeedRate))
 	builder.WriteString(fmt.Sprintf("AutoSaveSpan=%f,", ws.AutoSaveSpan))
-	builder.WriteString(fmt.Sprintf("CrossplayPlatforms=%s,", FormatStringArray(ws.CrossplayPlatforms)))
+	builder.WriteString(fmt.Sprintf("CrossplayPlatforms=%s,", formatStringArray(ws.CrossplayPlatforms)))
 	builder.WriteString(fmt.Sprintf("LogFormatType=%s,", ws.LogFormatType))
-	builder.WriteString(fmt.Sprintf("bIsMultiplay=%s,", FormatBool(ws.BIsMultiplay)))
-	builder.WriteString(fmt.Sprintf("bIsPvP=%s,", FormatBool(ws.BIsPvP)))
-	builder.WriteString(fmt.Sprintf("bHardcore=%s,", FormatBool(ws.BHardcore)))
-	builder.WriteString(fmt.Sprintf("bPalLost=%s,", FormatBool(ws.BPalLost)))
-	builder.WriteString(fmt.Sprintf("bCharacterRecreateInHardcore=%s,", FormatBool(ws.BCharacterRecreateInHardcore)))
-	builder.WriteString(fmt.Sprintf("bCanPickupOtherGuildDeathPenaltyDrop=%s,", FormatBool(ws.BCanPickupOtherGuildDeathPenaltyDrop)))
-	builder.WriteString(fmt.Sprintf("bEnableNonLoginPenalty=%s,", FormatBool(ws.BEnableNonLoginPenalty)))
-	builder.WriteString(fmt.Sprintf("bEnableFastTravel=%s,", FormatBool(ws.BEnableFastTravel)))
-	builder.WriteString(fmt.Sprintf("bIsStartLocationSelectByMap=%s,", FormatBool(ws.BIsStartLocationSelectByMap)))
-	builder.WriteString(fmt.Sprintf("bExistPlayerAfterLogout=%s,", FormatBool(ws.BExistPlayerAfterLogout)))
-	builder.WriteString(fmt.Sprintf("bEnableDefenseOtherGuildPlayer=%s,", FormatBool(ws.BEnableDefenseOtherGuildPlayer)))
-	builder.WriteString(fmt.Sprintf("bInvisibleOtherGuildBaseCampAreaFX=%s,", FormatBool(ws.BInvisibleOtherGuildBaseCampAreaFX)))
-	builder.WriteString(fmt.Sprintf("bBuildAreaLimit=%s,", FormatBool(ws.BBuildAreaLimit)))
+	builder.WriteString(fmt.Sprintf("bIsMultiplay=%s,", formatBool(ws.BIsMultiplay)))
+	builder.WriteString(fmt.Sprintf("bIsPvP=%s,", formatBool(ws.BIsPvP)))
+	builder.WriteString(fmt.Sprintf("bHardcore=%s,", formatBool(ws.BHardcore)))
+	builder.WriteString(fmt.Sprintf("bPalLost=%s,", formatBool(ws.BPalLost)))
+	builder.WriteString(fmt.Sprintf("bCharacterRecreateInHardcore=%s,", formatBool(ws.BCharacterRecreateInHardcore)))
+	builder.WriteString(fmt.Sprintf("bCanPickupOtherGuildDeathPenaltyDrop=%s,", formatBool(ws.BCanPickupOtherGuildDeathPenaltyDrop)))
+	builder.WriteString(fmt.Sprintf("bEnableNonLoginPenalty=%s,", formatBool(ws.BEnableNonLoginPenalty)))
+	builder.WriteString(fmt.Sprintf("bEnableFastTravel=%s,", formatBool(ws.BEnableFastTravel)))
+	builder.WriteString(fmt.Sprintf("bIsStartLocationSelectByMap=%s,", formatBool(ws.BIsStartLocationSelectByMap)))
+	builder.WriteString(fmt.Sprintf("bExistPlayerAfterLogout=%s,", formatBool(ws.BExistPlayerAfterLogout)))
+	builder.WriteString(fmt.Sprintf("bEnableDefenseOtherGuildPlayer=%s,", formatBool(ws.BEnableDefenseOtherGuildPlayer)))
+	builder.WriteString(fmt.Sprintf("bInvisibleOtherGuildBaseCampAreaFX=%s,", formatBool(ws.BInvisibleOtherGuildBaseCampAreaFX)))
+	builder.WriteString(fmt.Sprintf("bBuildAreaLimit=%s,", formatBool(ws.BBuildAreaLimit)))
 	builder.WriteString(fmt.Sprintf("ItemWeightRate=%f,", ws.ItemWeightRate))
-	builder.WriteString(fmt.Sprintf("bShowPlayerList=%s,", FormatBool(ws.BShowPlayerList)))
+	builder.WriteString(fmt.Sprintf("bShowPlayerList=%s,", formatBool(ws.BShowPlayerList)))
 	builder.WriteString(fmt.Sprintf("CoopPlayerMaxNum=%d,", ws.CoopPlayerMaxNum))
 	builder.WriteString(fmt.Sprintf("ServerPlayerMaxNum=%d,", ws.ServerPlayerMaxNum))
 	builder.WriteString(fmt.Sprintf("ServerName=\"%s\",", ws.ServerName))
@@ -199,20 +200,20 @@ func (ws *WorldSetting) buildOptionString() string {
 	builder.WriteString(fmt.Sprintf("ServerPassword=\"%s\",", ws.ServerPassword))
 	builder.WriteString(fmt.Sprintf("PublicPort=%d,", ws.PublicPort))
 	builder.WriteString(fmt.Sprintf("PublicIP=\"%s\",", ws.PublicIP))
-	builder.WriteString(fmt.Sprintf("RCONEnabled=%s,", FormatBool(ws.RCONEnabled)))
+	builder.WriteString(fmt.Sprintf("RCONEnabled=%s,", formatBool(ws.RCONEnabled)))
 	builder.WriteString(fmt.Sprintf("RCONPort=%d,", ws.RCONPort))
-	builder.WriteString(fmt.Sprintf("RESTAPIEnabled=%s,", FormatBool(ws.RESTAPIEnabled)))
+	builder.WriteString(fmt.Sprintf("RESTAPIEnabled=%s,", formatBool(ws.RESTAPIEnabled)))
 	builder.WriteString(fmt.Sprintf("RESTAPIPort=%d,", ws.RESTAPIPort))
-	builder.WriteString(fmt.Sprintf("bIsUseBackupSaveData=%s,", FormatBool(ws.BIsUseBackupSaveData)))
+	builder.WriteString(fmt.Sprintf("bIsUseBackupSaveData=%s,", formatBool(ws.BIsUseBackupSaveData)))
 	builder.WriteString(fmt.Sprintf("Region=\"%s\",", ws.Region))
-	builder.WriteString(fmt.Sprintf("bUseAuth=%s,", FormatBool(ws.BUseAuth)))
+	builder.WriteString(fmt.Sprintf("bUseAuth=%s,", formatBool(ws.BUseAuth)))
 	builder.WriteString(fmt.Sprintf("BanListURL=\"%s\",", ws.BanListURL))
 	builder.WriteString(fmt.Sprintf("SupplyDropSpan=%d,", ws.SupplyDropSpan))
 	builder.WriteString(fmt.Sprintf("ChatPostLimitPerMinute=%d,", ws.ChatPostLimitPerMinute))
 	builder.WriteString(fmt.Sprintf("MaxBuildingLimitNum=%d,", ws.MaxBuildingLimitNum))
 	builder.WriteString(fmt.Sprintf("ServerReplicatePawnCullDistance=%f,", ws.ServerReplicatePawnCullDistance))
-	builder.WriteString(fmt.Sprintf("bAllowGlobalPalboxExport=%s,", FormatBool(ws.BAllowGlobalPalboxExport)))
-	builder.WriteString(fmt.Sprintf("bAllowGlobalPalboxImport=%s,", FormatBool(ws.BAllowGlobalPalboxImport)))
+	builder.WriteString(fmt.Sprintf("bAllowGlobalPalboxExport=%s,", formatBool(ws.BAllowGlobalPalboxExport)))
+	builder.WriteString(fmt.Sprintf("bAllowGlobalPalboxImport=%s,", formatBool(ws.BAllowGlobalPalboxImport)))
 	builder.WriteString(fmt.Sprintf("EquipmentDurabilityDamageRate=%f,", ws.EquipmentDurabilityDamageRate))
 	builder.WriteString(fmt.Sprintf("ItemContainerForceMarkDirtyInterval=%f,", ws.ItemContainerForceMarkDirtyInterval))
 	builder.WriteString(fmt.Sprintf("ItemCorruptionMultiplier=%f", ws.ItemCorruptionMultiplier))
@@ -324,133 +325,133 @@ func applyConfigPair(key, val string, ws *WorldSetting) {
 	case "RandomizerSeed":
 		ws.RandomizerSeed = val
 	case "bIsRandomizerPalLevelRandom":
-		ws.BIsRandomizerPalLevelRandom = ParseBool(val)
+		ws.BIsRandomizerPalLevelRandom = parseBool(val)
 	case "DayTimeSpeedRate":
-		ws.DayTimeSpeedRate = ParseFloat(val)
+		ws.DayTimeSpeedRate = parseFloat(val)
 	case "NightTimeSpeedRate":
-		ws.NightTimeSpeedRate = ParseFloat(val)
+		ws.NightTimeSpeedRate = parseFloat(val)
 	case "ExpRate":
-		ws.ExpRate = ParseFloat(val)
+		ws.ExpRate = parseFloat(val)
 	case "PalCaptureRate":
-		ws.PalCaptureRate = ParseFloat(val)
+		ws.PalCaptureRate = parseFloat(val)
 	case "PalSpawnNumRate":
-		ws.PalSpawnNumRate = ParseFloat(val)
+		ws.PalSpawnNumRate = parseFloat(val)
 	case "PalDamageRateAttack":
-		ws.PalDamageRateAttack = ParseFloat(val)
+		ws.PalDamageRateAttack = parseFloat(val)
 	case "PalDamageRateDefense":
-		ws.PalDamageRateDefense = ParseFloat(val)
+		ws.PalDamageRateDefense = parseFloat(val)
 	case "PlayerDamageRateAttack":
-		ws.PlayerDamageRateAttack = ParseFloat(val)
+		ws.PlayerDamageRateAttack = parseFloat(val)
 	case "PlayerDamageRateDefense":
-		ws.PlayerDamageRateDefense = ParseFloat(val)
+		ws.PlayerDamageRateDefense = parseFloat(val)
 	case "PlayerStomachDecreaceRate":
-		ws.PlayerStomachDecreaceRate = ParseFloat(val)
+		ws.PlayerStomachDecreaceRate = parseFloat(val)
 	case "PlayerStaminaDecreaceRate":
-		ws.PlayerStaminaDecreaceRate = ParseFloat(val)
+		ws.PlayerStaminaDecreaceRate = parseFloat(val)
 	case "PlayerAutoHPRegeneRate":
-		ws.PlayerAutoHPRegeneRate = ParseFloat(val)
+		ws.PlayerAutoHPRegeneRate = parseFloat(val)
 	case "PlayerAutoHpRegeneRateInSleep":
-		ws.PlayerAutoHpRegeneRateInSleep = ParseFloat(val)
+		ws.PlayerAutoHpRegeneRateInSleep = parseFloat(val)
 	case "PalStomachDecreaceRate":
-		ws.PalStomachDecreaceRate = ParseFloat(val)
+		ws.PalStomachDecreaceRate = parseFloat(val)
 	case "PalStaminaDecreaceRate":
-		ws.PalStaminaDecreaceRate = ParseFloat(val)
+		ws.PalStaminaDecreaceRate = parseFloat(val)
 	case "PalAutoHPRegeneRate":
-		ws.PalAutoHPRegeneRate = ParseFloat(val)
+		ws.PalAutoHPRegeneRate = parseFloat(val)
 	case "PalAutoHpRegeneRateInSleep":
-		ws.PalAutoHpRegeneRateInSleep = ParseFloat(val)
+		ws.PalAutoHpRegeneRateInSleep = parseFloat(val)
 	case "BuildObjectHpRate":
-		ws.BuildObjectHpRate = ParseFloat(val)
+		ws.BuildObjectHpRate = parseFloat(val)
 	case "BuildObjectDamageRate":
-		ws.BuildObjectDamageRate = ParseFloat(val)
+		ws.BuildObjectDamageRate = parseFloat(val)
 	case "BuildObjectDeteriorationDamageRate":
-		ws.BuildObjectDeteriorationDamageRate = ParseFloat(val)
+		ws.BuildObjectDeteriorationDamageRate = parseFloat(val)
 	case "CollectionDropRate":
-		ws.CollectionDropRate = ParseFloat(val)
+		ws.CollectionDropRate = parseFloat(val)
 	case "CollectionObjectHpRate":
-		ws.CollectionObjectHpRate = ParseFloat(val)
+		ws.CollectionObjectHpRate = parseFloat(val)
 	case "CollectionObjectRespawnSpeedRate":
-		ws.CollectionObjectRespawnSpeedRate = ParseFloat(val)
+		ws.CollectionObjectRespawnSpeedRate = parseFloat(val)
 	case "EnemyDropItemRate":
-		ws.EnemyDropItemRate = ParseFloat(val)
+		ws.EnemyDropItemRate = parseFloat(val)
 	case "DeathPenalty":
 		ws.DeathPenalty = val
 	case "bEnablePlayerToPlayerDamage":
-		ws.BEnablePlayerToPlayerDamage = ParseBool(val)
+		ws.BEnablePlayerToPlayerDamage = parseBool(val)
 	case "bEnableFriendlyFire":
-		ws.BEnableFriendlyFire = ParseBool(val)
+		ws.BEnableFriendlyFire = parseBool(val)
 	case "bEnableInvaderEnemy":
-		ws.BEnableInvaderEnemy = ParseBool(val)
+		ws.BEnableInvaderEnemy = parseBool(val)
 	case "EnablePredatorBossPal":
-		ws.EnablePredatorBossPal = ParseBool(val)
+		ws.EnablePredatorBossPal = parseBool(val)
 	case "bActiveUNKO":
-		ws.BActiveUNKO = ParseBool(val)
+		ws.BActiveUNKO = parseBool(val)
 	case "bEnableAimAssistPad":
-		ws.BEnableAimAssistPad = ParseBool(val)
+		ws.BEnableAimAssistPad = parseBool(val)
 	case "bEnableAimAssistKeyboard":
-		ws.BEnableAimAssistKeyboard = ParseBool(val)
+		ws.BEnableAimAssistKeyboard = parseBool(val)
 	case "DropItemMaxNum":
-		ws.DropItemMaxNum = ParseInt(val)
+		ws.DropItemMaxNum = parseInt(val)
 	case "DropItemMaxNum_UNKO":
-		ws.DropItemMaxNumUNKO = ParseInt(val)
+		ws.DropItemMaxNumUNKO = parseInt(val)
 	case "BaseCampMaxNum":
-		ws.BaseCampMaxNum = ParseInt(val)
+		ws.BaseCampMaxNum = parseInt(val)
 	case "BaseCampMaxNumInGuild":
-		ws.BaseCampMaxNumInGuild = ParseInt(val)
+		ws.BaseCampMaxNumInGuild = parseInt(val)
 	case "BaseCampWorkerMaxNum":
-		ws.BaseCampWorkerMaxNum = ParseInt(val)
+		ws.BaseCampWorkerMaxNum = parseInt(val)
 	case "DropItemAliveMaxHours":
-		ws.DropItemAliveMaxHours = ParseFloat(val)
+		ws.DropItemAliveMaxHours = parseFloat(val)
 	case "bAutoResetGuildNoOnlinePlayers":
-		ws.BAutoResetGuildNoOnlinePlayers = ParseBool(val)
+		ws.BAutoResetGuildNoOnlinePlayers = parseBool(val)
 	case "AutoResetGuildTimeNoOnlinePlayers":
-		ws.AutoResetGuildTimeNoOnlinePlayers = ParseFloat(val)
+		ws.AutoResetGuildTimeNoOnlinePlayers = parseFloat(val)
 	case "GuildPlayerMaxNum":
-		ws.GuildPlayerMaxNum = ParseInt(val)
+		ws.GuildPlayerMaxNum = parseInt(val)
 	case "PalEggDefaultHatchingTime":
-		ws.PalEggDefaultHatchingTime = ParseFloat(val)
+		ws.PalEggDefaultHatchingTime = parseFloat(val)
 	case "WorkSpeedRate":
-		ws.WorkSpeedRate = ParseFloat(val)
+		ws.WorkSpeedRate = parseFloat(val)
 	case "AutoSaveSpan":
-		ws.AutoSaveSpan = ParseFloat(val)
+		ws.AutoSaveSpan = parseFloat(val)
 	case "CrossplayPlatforms":
-		ws.CrossplayPlatforms = ParseList(val)
+		ws.CrossplayPlatforms = parseList(val)
 	case "LogFormatType":
 		ws.LogFormatType = val
 	case "bIsMultiplay":
-		ws.BIsMultiplay = ParseBool(val)
+		ws.BIsMultiplay = parseBool(val)
 	case "bIsPvP":
-		ws.BIsPvP = ParseBool(val)
+		ws.BIsPvP = parseBool(val)
 	case "bHardcore":
-		ws.BHardcore = ParseBool(val)
+		ws.BHardcore = parseBool(val)
 	case "bPalLost":
-		ws.BPalLost = ParseBool(val)
+		ws.BPalLost = parseBool(val)
 	case "bCharacterRecreateInHardcore":
-		ws.BCharacterRecreateInHardcore = ParseBool(val)
+		ws.BCharacterRecreateInHardcore = parseBool(val)
 	case "bCanPickupOtherGuildDeathPenaltyDrop":
-		ws.BCanPickupOtherGuildDeathPenaltyDrop = ParseBool(val)
+		ws.BCanPickupOtherGuildDeathPenaltyDrop = parseBool(val)
 	case "bEnableNonLoginPenalty":
-		ws.BEnableNonLoginPenalty = ParseBool(val)
+		ws.BEnableNonLoginPenalty = parseBool(val)
 	case "bEnableFastTravel":
-		ws.BEnableFastTravel = ParseBool(val)
+		ws.BEnableFastTravel = parseBool(val)
 	case "bIsStartLocationSelectByMap":
-		ws.BIsStartLocationSelectByMap = ParseBool(val)
+		ws.BIsStartLocationSelectByMap = parseBool(val)
 	case "bExistPlayerAfterLogout":
-		ws.BExistPlayerAfterLogout = ParseBool(val)
+		ws.BExistPlayerAfterLogout = parseBool(val)
 	case "bEnableDefenseOtherGuildPlayer":
-		ws.BEnableDefenseOtherGuildPlayer = ParseBool(val)
+		ws.BEnableDefenseOtherGuildPlayer = parseBool(val)
 	case "bInvisibleOtherGuildBaseCampAreaFX":
-		ws.BInvisibleOtherGuildBaseCampAreaFX = ParseBool(val)
+		ws.BInvisibleOtherGuildBaseCampAreaFX = parseBool(val)
 	case "bBuildAreaLimit":
-		ws.BBuildAreaLimit = ParseBool(val)
+		ws.BBuildAreaLimit = parseBool(val)
 	case "ItemWeightRate":
-		ws.ItemWeightRate = ParseFloat(val)
+		ws.ItemWeightRate = parseFloat(val)
 	case "bShowPlayerList":
-		ws.BShowPlayerList = ParseBool(val)
+		ws.BShowPlayerList = parseBool(val)
 	case "CoopPlayerMaxNum":
-		ws.CoopPlayerMaxNum = ParseInt(val)
+		ws.CoopPlayerMaxNum = parseInt(val)
 	case "ServerPlayerMaxNum":
-		ws.ServerPlayerMaxNum = ParseInt(val)
+		ws.ServerPlayerMaxNum = parseInt(val)
 	case "ServerName":
 		ws.ServerName = val
 	case "ServerDescription":
@@ -460,42 +461,99 @@ func applyConfigPair(key, val string, ws *WorldSetting) {
 	case "ServerPassword":
 		ws.ServerPassword = val
 	case "PublicPort":
-		ws.PublicPort = ParseInt(val)
+		ws.PublicPort = parseInt(val)
 	case "PublicIP":
 		ws.PublicIP = val
 	case "RCONEnabled":
-		ws.RCONEnabled = ParseBool(val)
+		ws.RCONEnabled = parseBool(val)
 	case "RCONPort":
-		ws.RCONPort = ParseInt(val)
+		ws.RCONPort = parseInt(val)
 	case "RESTAPIEnabled":
-		ws.RESTAPIEnabled = ParseBool(val)
+		ws.RESTAPIEnabled = parseBool(val)
 	case "RESTAPIPort":
-		ws.RESTAPIPort = ParseInt(val)
+		ws.RESTAPIPort = parseInt(val)
 	case "bIsUseBackupSaveData":
-		ws.BIsUseBackupSaveData = ParseBool(val)
+		ws.BIsUseBackupSaveData = parseBool(val)
 	case "Region":
 		ws.Region = val
 	case "bUseAuth":
-		ws.BUseAuth = ParseBool(val)
+		ws.BUseAuth = parseBool(val)
 	case "BanListURL":
 		ws.BanListURL = val
 	case "SupplyDropSpan":
-		ws.SupplyDropSpan = ParseInt(val)
+		ws.SupplyDropSpan = parseInt(val)
 	case "ChatPostLimitPerMinute":
-		ws.ChatPostLimitPerMinute = ParseInt(val)
+		ws.ChatPostLimitPerMinute = parseInt(val)
 	case "MaxBuildingLimitNum":
-		ws.MaxBuildingLimitNum = ParseInt(val)
+		ws.MaxBuildingLimitNum = parseInt(val)
 	case "ServerReplicatePawnCullDistance":
-		ws.ServerReplicatePawnCullDistance = ParseFloat(val)
+		ws.ServerReplicatePawnCullDistance = parseFloat(val)
 	case "bAllowGlobalPalboxExport":
-		ws.BAllowGlobalPalboxExport = ParseBool(val)
+		ws.BAllowGlobalPalboxExport = parseBool(val)
 	case "bAllowGlobalPalboxImport":
-		ws.BAllowGlobalPalboxImport = ParseBool(val)
+		ws.BAllowGlobalPalboxImport = parseBool(val)
 	case "EquipmentDurabilityDamageRate":
-		ws.EquipmentDurabilityDamageRate = ParseFloat(val)
+		ws.EquipmentDurabilityDamageRate = parseFloat(val)
 	case "ItemContainerForceMarkDirtyInterval":
-		ws.ItemContainerForceMarkDirtyInterval = ParseFloat(val)
+		ws.ItemContainerForceMarkDirtyInterval = parseFloat(val)
 	case "ItemCorruptionMultiplier":
-		ws.ItemCorruptionMultiplier = ParseFloat(val)
+		ws.ItemCorruptionMultiplier = parseFloat(val)
 	}
+}
+
+// parseBool safely converts string to bool (supports True/False, true/false)
+func parseBool(s string) bool {
+	s = strings.ToLower(s)
+	return s == "true" || s == "1" || s == "yes"
+}
+
+// parseFloat safely converts string to float64
+func parseFloat(s string) float64 {
+	f, _ := strconv.ParseFloat(s, 64)
+	return f
+}
+
+// parseInt safely converts string to int
+func parseInt(s string) int {
+	i, _ := strconv.Atoi(s)
+	return i
+}
+
+// parseList converts "(Steam,Xbox,PS5,Mac)" → []string{"Steam","Xbox","PS5","Mac"}
+func parseList(s string) []string {
+	s = strings.TrimSpace(s)
+	s = strings.Trim(s, "()")
+
+	if s == "" {
+		return []string{}
+	}
+
+	parts := strings.Split(s, ",")
+	result := make([]string, 0, len(parts))
+
+	for _, part := range parts {
+		part = strings.TrimSpace(part)
+		if part != "" {
+			result = append(result, part)
+		}
+	}
+
+	return result
+}
+
+// formatBool converts a boolean to Palworld config format (True/False)
+func formatBool(b bool) string {
+	if b {
+		return "True"
+	}
+	return "False"
+}
+
+// formatStringArray converts a string slice to Palworld config array format
+// Example: []string{"Steam", "Xbox"} -> "(Steam,Xbox)"
+func formatStringArray(arr []string) string {
+	if len(arr) == 0 {
+		return "()"
+	}
+	return "(" + strings.Join(arr, ",") + ")"
 }
