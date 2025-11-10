@@ -14,10 +14,13 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/chau-nm/palsvm/internal/config"
 	"github.com/gin-gonic/gin"
 )
 
 const pidFile = "/tmp/palsvm.pid"
+
+var serverConfig *config.PalsvmConfig
 
 type Server struct {
 	host    string
@@ -63,6 +66,16 @@ func (s *Server) Start() error {
 		return fmt.Errorf("failed to save PID: %v", err)
 	}
 
+	// loadServer config
+	var err error
+	serverConfig, err = config.LoadPalsvmConfig()
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("PalsvmConfig: %+v\n", serverConfig)
+
+	// start Server
 	go func() {
 		s.srv.ErrorLog = log.New(io.Discard, "", 0)
 		fmt.Printf("Server started on %s:%s (PID: %d)", s.host, s.port, os.Getpid())
