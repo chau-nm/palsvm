@@ -20,7 +20,7 @@ import (
 
 const pidFile = "/tmp/palsvm.pid"
 
-var serverConfig *config.PalsvmConfig
+var PalSvmServerConfig *config.PalsvmConfig
 
 type Server struct {
 	host    string
@@ -68,12 +68,12 @@ func (s *Server) Start() error {
 
 	// loadServer config
 	var err error
-	serverConfig, err = config.LoadPalsvmConfig()
+	PalSvmServerConfig, err = config.LoadPalsvmConfig()
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf("PalsvmConfig: %+v\n", serverConfig)
+	fmt.Printf("PalsvmConfig: %+v\n", PalSvmServerConfig)
 
 	// start Server
 	go func() {
