@@ -7,21 +7,25 @@ import (
 )
 
 const (
-	FileConfigLocation     = "~/.palsvm/palsvm_config.json"
-	DefaultServerUsername  = "admin"
-	DefaultServerPassword  = "admin"
-	DefaultServerHostName  = "0.0.0.0"
-	DefaultServerPort      = 8080
-	FolderConfigPermission = 0700
-	FileConfigPermission   = 0600
+	FileConfigLocation         = "~/.palsvm/palsvm_config.json"
+	DefaultServerUsername      = "admin"
+	DefaultServerPassword      = "admin"
+	DefaultServerHostName      = "0.0.0.0"
+	DefaultServerPort          = 8080
+	FolderConfigPermission     = 0700
+	FileConfigPermission       = 0600
+	DefaultPalworldSettingFile = "~/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini"
+	DefaultPalworldExecuteFile = "~/PalServer"
 )
 
 type PalsvmConfig struct {
-	ServerUsername string `json:"server_username"`
-	ServerPassword string `json:"server_password"`
-	ServerHostname string `json:"server_hostname"`
-	ServerPort     int    `json:"server_port"`
-	ServerSecret   string `json:"server_secret"`
+	ServerUsername  string `json:"server_username"`
+	ServerPassword  string `json:"server_password"`
+	ServerHostname  string `json:"server_hostname"`
+	ServerPort      int    `json:"server_port"`
+	ServerSecret    string `json:"server_secret"`
+	SettingFilePath string `json:"setting_file_path"`
+	ExecuteFilePath string `json:"execute_file_path"`
 }
 
 // LoadPalsvmConfig read config file and convert to PalsvmConfig
@@ -32,10 +36,12 @@ func LoadPalsvmConfig() (*PalsvmConfig, error) {
 	if err != nil {
 		if os.IsNotExist(err) {
 			config := &PalsvmConfig{
-				ServerUsername: DefaultServerUsername,
-				ServerPassword: DefaultServerPassword,
-				ServerHostname: DefaultServerHostName,
-				ServerPort:     DefaultServerPort,
+				ServerUsername:  DefaultServerUsername,
+				ServerPassword:  DefaultServerPassword,
+				ServerHostname:  DefaultServerHostName,
+				ServerPort:      DefaultServerPort,
+				SettingFilePath: DefaultPalworldSettingFile,
+				ExecuteFilePath: DefaultPalworldExecuteFile,
 			}
 			if err := SavePalsvmConfig(config); err != nil {
 				return nil, err
