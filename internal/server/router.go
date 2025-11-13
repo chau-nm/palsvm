@@ -12,4 +12,5 @@ func (s *Server) setupRoutes() {
 
 func (s *Server) setupViewRouter() {
 	s.router.GET("/login", handlers.Login)
+	s.router.GET("/", handlers.PalworldSettingViewHandler)
 }
