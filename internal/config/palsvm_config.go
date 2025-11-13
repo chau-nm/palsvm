@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+
+	"github.com/chau-nm/palsvm"
 )
 
 const (
@@ -28,11 +30,15 @@ type PalsvmConfig struct {
 	ExecuteFilePath string `json:"execute_file_path"`
 }
 
+// PalSvmServerConfig The global config of system
+var PalSvmServerConfig *PalsvmConfig
+
 // LoadPalsvmConfig read config file and convert to PalsvmConfig
-func LoadPalsvmConfig() (*PalsvmConfig, error) {
+func LoadPalsvmConfig() error {
 	configPath := expandPath(FileConfigLocation)
 
 	data, err := os.ReadFile(configPath)
+	// If config file is not exist, A default config is created.
 	if err != nil {
 		if os.IsNotExist(err) {
 			config := &PalsvmConfig{
@@ -42,21 +48,25 @@ func LoadPalsvmConfig() (*PalsvmConfig, error) {
 				ServerPort:      DefaultServerPort,
 				SettingFilePath: DefaultPalworldSettingFile,
 				ExecuteFilePath: DefaultPalworldExecuteFile,
+				ServerSecret:    palsvm.RandomSecret(32),
 			}
 			if err := SavePalsvmConfig(config); err != nil {
-				return nil, err
+				return err
 			}
-			return config, nil
+			PalSvmServerConfig = config
+			return nil
 		}
-		return nil, err
+		return err
 	}
 
+	// Read config if config file is existed,
 	var config PalsvmConfig
 	if err := json.Unmarshal(data, &config); err != nil {
-		return nil, err
+		return err
 	}
 
-	return &config, nil
+	PalSvmServerConfig = &config
+	return nil
 }
 
 // SavePalsvmConfig write PalsvmConfig into config file

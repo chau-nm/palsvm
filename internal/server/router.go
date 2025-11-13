@@ -7,10 +7,11 @@ import (
 func (s *Server) setupRoutes() {
 	s.router.GET("/health", handlers.CheckHealth)
 
-	s.setupViewRouter()
-}
+	// auth
+	s.router.GET("/login", authorizedMiddleware(), handlers.LoginViewHandler)
+	s.router.POST("/login", authorizedMiddleware(), handlers.LoginHandler)
+	s.router.GET("/logout", handlers.LogoutHandler)
 
-func (s *Server) setupViewRouter() {
-	s.router.GET("/login", handlers.Login)
-	s.router.GET("/", handlers.PalworldSettingViewHandler)
+	// dashboard
+	s.router.GET("/", authRequiredMiddleware(), handlers.PalworldSettingViewHandler)
 }

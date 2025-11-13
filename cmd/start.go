@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/chau-nm/palsvm/internal/config"
 	"github.com/chau-nm/palsvm/internal/server"
 	"github.com/spf13/cobra"
 )
@@ -21,6 +22,11 @@ var startCmd = &cobra.Command{
 	Short: "Start the HTTP server",
 	Long:  `Start the HTTP server on specified port`,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		err := config.LoadPalsvmConfig()
+		if err != nil {
+			return err
+		}
+
 		srv := server.New(host, port)
 
 		if err := srv.Start(); err != nil {
