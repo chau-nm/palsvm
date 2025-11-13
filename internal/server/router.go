@@ -6,4 +6,10 @@ import (
 
 func (s *Server) setupRoutes() {
 	s.router.GET("/health", handlers.CheckHealth)
+
+	s.setupViewRouter()
+}
+
+func (s *Server) setupViewRouter() {
+	s.router.GET("/login", handlers.Login)
 }

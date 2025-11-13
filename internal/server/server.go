@@ -34,6 +34,13 @@ type Server struct {
 func New(host, port string) *Server {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
+	// Serve static files
+	router.Static("/assets", "./templates/assets")
+	router.Static("/css", "./templates/css")
+	router.Static("/js", "./templates/js")
+
+	// Template
+	router.LoadHTMLGlob("templates/*.tmpl")
 
 	return &Server{
 		host:    host,
