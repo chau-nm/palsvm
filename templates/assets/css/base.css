@@ -12,7 +12,6 @@ body {
     overflow: hidden;
 }
 
-/* Grid Layout Container */
 body {
     display: grid;
     grid-template-areas:
@@ -24,7 +23,7 @@ body {
 
 .main-wrapper {
     grid-area: main;
-    display: contents; /* Cho phép sidebar và main-content nằm trong grid */
+    display: contents;
 }
 
 .main-content {

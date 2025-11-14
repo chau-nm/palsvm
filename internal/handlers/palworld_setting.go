@@ -5,5 +5,5 @@ import (
 )
 
 func PalworldSettingViewHandler(c *gin.Context) {
-	// TODO
+	renderPage(c, "templates/page/palworld_setting.tmpl", gin.H{})
 }

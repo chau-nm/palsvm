@@ -8,8 +8,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
-    margin: 0 auto 40px auto; /* Thêm auto cho left và right */
-    max-width: 1200px; /* Giới hạn width để căn giữa rõ hơn */
+    margin: 0 auto 40px auto;
+    max-width: 1200px;
 }
 
 .menu-card {

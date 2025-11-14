@@ -1,0 +1,502 @@
+{{ define "title" }}Palworld Settings{{ end }}
+
+{{ define "extra_css" }}
+<link rel="stylesheet" href="/assets/css/palworld_setting.css">
+{{ end }}
+
+{{ define "content" }}
+<div class="settings-container">
+    <div class="settings-header">
+        <h1>Palworld Server Configuration</h1>
+        <p class="subtitle">Cấu hình chi tiết cho server Palworld của bạn</p>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs-nav">
+        <button class="tab-btn active" data-tab="server-settings">
+            Server Settings
+        </button>
+        <button class="tab-btn" data-tab="ingame-settings">
+            In-Game Settings
+        </button>
+        <button class="tab-btn" data-tab="advanced-settings">
+            Advanced Settings
+        </button>
+    </div>
+
+    <form id="settingsForm" class="settings-form">
+        <!-- Tab 1: Server Settings -->
+        <div class="tab-content active" id="server-settings">
+            <div class="form-group">
+                <label for="serverName">Server Name</label>
+                <input type="text" id="serverName" value="Default Palworld Server" placeholder="Enter server name">
+            </div>
+
+            <div class="form-group">
+                <label for="serverDescription">Server Description</label>
+                <textarea id="serverDescription" rows="4" placeholder="Enter server description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="adminPassword">Admin Password</label>
+                <input type="password" id="adminPassword" placeholder="Enter admin password">
+            </div>
+
+            <div class="form-group">
+                <label for="serverPassword">Server Password</label>
+                <input type="password" id="serverPassword" placeholder="Leave empty for public server">
+            </div>
+
+            <div class="form-group">
+                <label for="publicIP">Public IP</label>
+                <input type="text" id="publicIP" placeholder="Auto-detect or enter manually">
+            </div>
+
+            <div class="form-group">
+                <label for="publicPort">Public Port</label>
+                <input type="number" id="publicPort" value="8211" placeholder="8211">
+            </div>
+
+            <div class="form-group">
+                <label for="maxPlayers">
+                    Server Player Max Num
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group">
+                    <input type="number" class="slider-input" id="maxPlayersInput" value="32" min="1" max="64">
+                    <input type="range" class="slider" id="maxPlayers" value="32" min="1" max="64">
+                </div>
+            </div>
+
+            <div class="form-group toggle-group">
+                <label for="useBackupSave">Is Use Backup Save Data</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="useBackupSave" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="autoSaveSpan">
+                    Auto Save Span
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group">
+                    <input type="number" class="slider-input" id="autoSaveSpanInput" value="30" min="5" max="300">
+                    <input type="range" class="slider" id="autoSaveSpan" value="30" min="5" max="300">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Allow Connect Platform</label>
+                <div class="platform-tabs">
+                    <button type="button" class="platform-tab">PalWorldSettings.ini</button>
+                    <button type="button" class="platform-tab active">WorldOption.sav</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: In-Game Settings -->
+        <div class="tab-content" id="ingame-settings">
+            <div class="form-group">
+                <label for="daySpeed">
+                    Day Time Speed Rate
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group">
+                    <input type="number" class="slider-input" value="1" min="0.1" max="5" step="0.1">
+                    <input type="range" class="slider" id="daySpeed" value="1" min="0.1" max="5" step="0.1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nightSpeed">
+                    Night Time Speed Rate
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group">
+                    <input type="number" class="slider-input" value="1" min="0.1" max="5" step="0.1">
+                    <input type="range" class="slider" id="nightSpeed" value="1" min="0.1" max="5" step="0.1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="expRate">
+                    Exp Rate
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group with-labels">
+                    <span class="slider-label-left">
+                        <svg viewBox="0 0 24 24" class="icon-harder">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        </svg>
+                        Harder
+                    </span>
+                    <input type="number" class="slider-input" value="1" min="0.1" max="10" step="0.1">
+                    <input type="range" class="slider" id="expRate" value="1" min="0.1" max="10" step="0.1">
+                    <span class="slider-label-right">
+                        Easier
+                        <svg viewBox="0 0 24 24" class="icon-easier">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="palCaptureRate">
+                    Pal Capture Rate
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group with-labels">
+                    <span class="slider-label-left">
+                        <svg viewBox="0 0 24 24" class="icon-harder">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        </svg>
+                        Harder
+                    </span>
+                    <input type="number" class="slider-input" value="1" min="0.1" max="10" step="0.1">
+                    <input type="range" class="slider" id="palCaptureRate" value="1" min="0.1" max="10" step="0.1">
+                    <span class="slider-label-right">
+                        Easier
+                        <svg viewBox="0 0 24 24" class="icon-easier">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="palSpawnRate">
+                    Pal Spawn Number Rate
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group">
+                    <input type="number" class="slider-input" value="1" min="0.1" max="5" step="0.1">
+                    <input type="range" class="slider" id="palSpawnRate" value="1" min="0.1" max="5" step="0.1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="palDamageAttack">
+                    Pal Damage Rate Attack
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group">
+                    <input type="number" class="slider-input" value="1" min="0.1" max="5" step="0.1">
+                    <input type="range" class="slider" id="palDamageAttack" value="1" min="0.1" max="5" step="0.1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="palDamageDefense">
+                    Pal Damage Rate Defense
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group">
+                    <input type="number" class="slider-input" value="1" min="0.1" max="5" step="0.1">
+                    <input type="range" class="slider" id="palDamageDefense" value="1" min="0.1" max="5" step="0.1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="palStomach">
+                    Pal Stomach Decrease Rate
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group with-labels">
+                    <span class="slider-label-left">
+                        <svg viewBox="0 0 24 24" class="icon-easier">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        </svg>
+                        Easier
+                    </span>
+                    <input type="number" class="slider-input" value="1" min="0.1" max="10" step="0.1">
+                    <input type="range" class="slider" id="palStomach" value="1" min="0.1" max="10" step="0.1">
+                    <span class="slider-label-right">
+                        Harder
+                        <svg viewBox="0 0 24 24" class="icon-harder">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="palStamina">
+                    Pal Stamina Decrease Rate
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group with-labels">
+                    <span class="slider-label-left">
+                        <svg viewBox="0 0 24 24" class="icon-easier">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        </svg>
+                        Easier
+                    </span>
+                    <input type="number" class="slider-input" value="1" min="0.1" max="10" step="0.1">
+                    <input type="range" class="slider" id="palStamina" value="1" min="0.1" max="10" step="0.1">
+                    <span class="slider-label-right">
+                        Harder
+                        <svg viewBox="0 0 24 24" class="icon-harder">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="platform-tabs-footer">
+                <button type="button" class="platform-tab">PalWorldSettings.ini</button>
+                <button type="button" class="platform-tab active">WorldOption.sav</button>
+            </div>
+        </div>
+
+        <!-- Tab 3: Advanced Settings -->
+        <div class="tab-content" id="advanced-settings">
+            <div class="form-group toggle-group">
+                <label for="pvpDamage">Enable Player To Player Damage</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="pvpDamage">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group toggle-group">
+                <label for="friendlyFire">Enable Friendly Fire</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="friendlyFire">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group toggle-group">
+                <label for="palPoop">Active UNKO (Pal will poop)</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="palPoop">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group toggle-group">
+                <label for="aimAssistController">Enable Aim Assist Controller</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="aimAssistController" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group toggle-group">
+                <label for="aimAssistKeyboard">Enable Aim Assist Keyboard</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="aimAssistKeyboard">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="palPoopMax">
+                    Pal Poop Drop Max Num (UNKO)
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group">
+                    <input type="number" class="slider-input" value="100" min="0" max="500">
+                    <input type="range" class="slider" id="palPoopMax" value="100" min="0" max="500">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="baseCampMax">
+                    Base Camp Max Num
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group">
+                    <input type="number" class="slider-input" value="128" min="1" max="256">
+                    <input type="range" class="slider" id="baseCampMax" value="128" min="1" max="256">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dropItemHours">
+                    Drop Item Alive Max Hours
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group">
+                    <input type="number" class="slider-input" value="1" min="0.1" max="24" step="0.1">
+                    <input type="range" class="slider" id="dropItemHours" value="1" min="0.1" max="24" step="0.1">
+                </div>
+            </div>
+
+            <div class="form-group toggle-group">
+                <label for="autoResetGuild">Auto Reset Guild No Online Players</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="autoResetGuild">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="autoResetTime">
+                    Auto Reset Guild Time No Online Players
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group">
+                    <input type="number" class="slider-input" value="72" min="1" max="168">
+                    <input type="range" class="slider" id="autoResetTime" value="72" min="1" max="168">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="workSpeed">
+                    Work Speed Rate
+                    <button type="button" class="reset-btn" title="Reset to default">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </label>
+                <div class="slider-group with-labels">
+                    <span class="slider-label-left">
+                        <svg viewBox="0 0 24 24" class="icon-harder">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        </svg>
+                        Harder
+                    </span>
+                    <input type="number" class="slider-input" value="1" min="0.1" max="10" step="0.1">
+                    <input type="range" class="slider" id="workSpeed" value="1" min="0.1" max="10" step="0.1">
+                    <span class="slider-label-right">
+                        Easier
+                        <svg viewBox="0 0 24 24" class="icon-easier">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group toggle-group">
+                <label for="isMultiplay">Is Multiplay</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="isMultiplay">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group toggle-group">
+                <label for="isPvP">Is PvP</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="isPvP">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group toggle-group">
+                <label for="hardcoreMode">Hardcore Mode</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="hardcoreMode">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group toggle-group">
+                <label for="palLostMode">Pal Lost Mode</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="palLostMode">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="platform-tabs-footer">
+                <button type="button" class="platform-tab">PalWorldSettings.ini</button>
+                <button type="button" class="platform-tab active">WorldOption.sav</button>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="form-actions">
+            <button type="button" class="btn btn-secondary">Reset All</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+{{ block "scripts" . }}
+<script src="/assets/js/palworld_setting.js"></script>
+{{ end }}
+{{ end }}
+
+{{ template "base" . }}

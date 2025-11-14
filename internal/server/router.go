@@ -14,4 +14,5 @@ func (s *Server) setupRoutes() {
 
 	// dashboard
 	s.router.GET("/", handlers.HomeViewHandler)
+	s.router.GET("/palworld-setting", handlers.PalworldSettingViewHandler)
 }
