@@ -13,6 +13,6 @@ func (s *Server) setupRoutes() {
 	s.router.GET("/logout", handlers.LogoutHandler)
 
 	// dashboard
-	s.router.GET("/", handlers.HomeViewHandler)
-	s.router.GET("/palworld-setting", handlers.PalworldSettingViewHandler)
+	s.router.GET("/", authRequiredMiddleware(), handlers.HomeViewHandler)
+	s.router.GET("/palworld-setting", authRequiredMiddleware(), handlers.PalworldSettingViewHandler)
 }

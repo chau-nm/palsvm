@@ -16,6 +16,10 @@ func loadGlobalTemplate() (*template.Template, error) {
 // renderPage render single template use base layout from global template
 func renderPage(c *gin.Context, pageTemplate string, data interface{}) {
 	tmpl, err := loadGlobalTemplate()
+	if err != nil {
+		http.Error(c.Writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
 	w := c.Writer
 	tmpl, err = tmpl.ParseFiles(pageTemplate)
 	if err != nil {
