@@ -1,0 +1,29 @@
+{{ define "base" }}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ block "title" . }}{{ end }} - Palsvm</title>
+    <link rel="stylesheet" href="assets/css/variable.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/sidebar.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    {{ block "extra_css" . }}{{ end }}
+</head>
+<body>
+    {{ template "header" . }}
+    <div class="main-wrapper">
+    {{ template "sidebar" . }}
+        <main class="main-content">
+            {{ block "content" . }}
+            <p>Default content</p>
+            {{ end }}
+        </main>
+    </div>
+
+    <script src="assets/js/header.js"></script>
+    {{ block "scripts" . }}{{ end }}
+</body>
+</html>
+{{ end }}

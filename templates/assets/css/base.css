@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--gray-950);
+    color: var(--gray-50);
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Grid Layout Container */
+body {
+    display: grid;
+    grid-template-areas:
+        "sidebar header"
+        "sidebar main";
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: 70px 1fr;
+}
+
+.main-wrapper {
+    grid-area: main;
+    display: contents; /* Cho phép sidebar và main-content nằm trong grid */
+}
+
+.main-content {
+    grid-area: main;
+    padding: 30px;
+    overflow-y: auto;
+    background: var(--gray-950);
+}
+
+/* Scrollbar styling */
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: var(--gray-900);
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: var(--gray-700);
+    border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-600);
+}

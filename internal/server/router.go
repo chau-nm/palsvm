@@ -13,5 +13,5 @@ func (s *Server) setupRoutes() {
 	s.router.GET("/logout", handlers.LogoutHandler)
 
 	// dashboard
-	s.router.GET("/", authRequiredMiddleware(), handlers.PalworldSettingViewHandler)
+	s.router.GET("/", handlers.HomeViewHandler)
 }

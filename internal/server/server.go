@@ -76,7 +76,7 @@ func loadTemplates(router *gin.Engine) {
 	router.Static("/js", "./templates/js")
 
 	// Load HTML templates
-	router.LoadHTMLGlob("templates/*.tmpl")
+	router.LoadHTMLGlob("templates/**/*.tmpl")
 }
 
 // Start starts the HTTP server if not already running.

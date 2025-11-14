@@ -9,8 +9,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const (
+	loginTemplate = "login.tmpl"
+)
+
 func LoginViewHandler(c *gin.Context) {
-	c.HTML(http.StatusOK, "login.tmpl", gin.H{})
+	c.HTML(http.StatusOK, loginTemplate, gin.H{})
 }
 
 func LoginHandler(c *gin.Context) {
@@ -19,7 +23,7 @@ func LoginHandler(c *gin.Context) {
 	password := c.PostForm("password")
 
 	if username != config.PalSvmServerConfig.ServerUsername || password != config.PalSvmServerConfig.ServerPassword {
-		c.HTML(http.StatusUnauthorized, "login.tmpl", gin.H{
+		c.HTML(http.StatusUnauthorized, loginTemplate, gin.H{
 			"Message": "Invalid username or password",
 		})
 		return
@@ -27,7 +31,7 @@ func LoginHandler(c *gin.Context) {
 	session.Set("username", username)
 	if err := session.Save(); err != nil {
 		fmt.Printf("Error saving session: %v\n", err)
-		c.HTML(http.StatusUnauthorized, "login.tmpl", gin.H{
+		c.HTML(http.StatusUnauthorized, loginTemplate, gin.H{
 			"Message": "Something went wrong",
 		})
 		return
