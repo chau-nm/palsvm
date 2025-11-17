@@ -1,3 +1,9 @@
+# ide
 .idea
 .vscode
+
+# package
 vendor
+
+# build
+dist
