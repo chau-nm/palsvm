@@ -17,7 +17,7 @@ const (
 	FolderConfigPermission     = 0700
 	FileConfigPermission       = 0600
 	DefaultPalworldSettingFile = "~/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini"
-	DefaultPalworldExecuteFile = "~/PalServer"
+	DefaultPalworldExecuteFile = "~/PalServer.sh"
 )
 
 type PalsvmConfig struct {
